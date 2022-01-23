@@ -214,9 +214,9 @@ echo "==================================================="
 echo "= Create Fstab"
 genfstab -U /mnt >> /mnt/etc/fstab
 echo "= Chroot into system"
-arch-chroot /mnt
+#arch-chroot /mnt
 echo "= Configure timezone"
-rm -rf /etc/localtime
+arch-chroot rm -rf /etc/localtime
 arch-chroot /mnt ln -sf /usr/share/zoneinfo/"${MYTMZ}" /etc/localtime
 echo "= Running hwclock(8) to generate /etc/adjtime"
 hwclock --systohc --utc
@@ -226,7 +226,7 @@ echo "= Edit /etc/locale.gen and uncomment:  "
 echo "=           en_US.UTF-8 UTF-8          "
 echo "=           and other needed locales   "
 read -p "Press any key to Continue " AUX
-nano /etc/locale.gen
+arch-chroot nano /etc/locale.gen
 echo "= Generate the locales "
 locale-gen
 echo ""${LCLST}".UTF-8 UTF-8" >> /mnt/etc/locale.gen
@@ -241,6 +241,7 @@ echo "127.0.0.1          localhost" >> /mnt/etc/hosts
 echo "::1          localhost" >> /mnt/etc/hosts
 echo "127.0.1.1          "${HSTNAME}".localdomain "${HSTNAME}"" >> /mnt/etc/hosts
 
+exit
 
 echo "==================================================="
 echo "======= Create root password and user   ==========="
