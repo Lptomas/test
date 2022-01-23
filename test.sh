@@ -216,11 +216,11 @@ genfstab -U /mnt >> /mnt/etc/fstab
 echo "= Chroot into system"
 #arch-chroot /mnt
 echo "= Configure timezone"
-arch-chroot rm -rf /etc/localtime
+arch-chroot /mnt rm -rf /etc/localtime
 arch-chroot /mnt ln -sf /usr/share/zoneinfo/"${MYTMZ}" /etc/localtime
 echo "= Running hwclock(8) to generate /etc/adjtime"
 hwclock --systohc --utc
-arch-chroot /mnt timedatectl set-ntp true
+timedatectl set-ntp true
 echo "= Configure locale"
 echo "= Edit /etc/locale.gen and uncomment:  "
 echo "=           en_US.UTF-8 UTF-8          "
@@ -240,7 +240,6 @@ echo ""${HSTNAME}"" > /mnt/etc/hostname
 echo "127.0.0.1          localhost" >> /mnt/etc/hosts
 echo "::1          localhost" >> /mnt/etc/hosts
 echo "127.0.1.1          "${HSTNAME}".localdomain "${HSTNAME}"" >> /mnt/etc/hosts
-
 
 
 echo "==================================================="
@@ -267,7 +266,6 @@ echo "= Create mirrorlist ="
 echo "==================================================="
 pacman -S reflector
 reflector --latest 10 --protocol https --save /etc/pacman.d/mirrorlist
-
 
 echo "==================================================="
 echo "================ Install GRUB   ==================="
