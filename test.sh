@@ -226,7 +226,7 @@ echo "= Edit /etc/locale.gen and uncomment:  "
 echo "=           en_US.UTF-8 UTF-8          "
 echo "=           and other needed locales   "
 read -p "Press any key to Continue " AUX
-arch-chroot nano /etc/locale.gen
+nano /mnt/etc/locale.gen
 echo "= Generate the locales "
 locale-gen
 echo ""${LCLST}".UTF-8 UTF-8" >> /mnt/etc/locale.gen
@@ -241,7 +241,7 @@ echo "127.0.0.1          localhost" >> /mnt/etc/hosts
 echo "::1          localhost" >> /mnt/etc/hosts
 echo "127.0.1.1          "${HSTNAME}".localdomain "${HSTNAME}"" >> /mnt/etc/hosts
 
-exit
+
 
 echo "==================================================="
 echo "======= Create root password and user   ==========="
