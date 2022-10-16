@@ -10,10 +10,10 @@ MYTMZ="Europe/Lisbon"   # List possible timezones from: /usr/share/zoneinfo/...
 LCLST="pt_PT"
 KEYMP="pt-latin1"
 KEYMP_gz="pt-latin1.map.gz" 
-USRNAME="Et"
+USRNAME="et"
 HSTNAME="et"
-USRPWD="edit_here_with_user_pw"
-RTPWD="edit_here_with_root_pw"
+USER_PW="user_pw"
+ROOT_PW="root_pw"
 
 
 # disk
@@ -25,12 +25,10 @@ disk_home='sda4'
 
 
 
-
-
-disk_type_SATA_or_MVME="mvme"    # or sata.
+#disk_type_SATA_or_MVME="mvme"    # or sata.
 disk_type_SATA_or_MVME="sata"    # or sata.
-SWPSIZE=2GiB  #      SWPSIZE=4GiB SWPSIZE=8Gib
-RTSIZE=30GiB  #     RTSIZE=40GiB .. RTSIZE=60Gib
+SWAP_SIZE=2GiB  #      SWAP_SIZE=4GiB SWAP_SIZE=8Gib
+ROOT_SIZE=30GiB  #     ROOT_SIZE=40GiB .. ROOT_SIZE=60Gib
 
 
 #desktop_environment="KDE"
@@ -39,8 +37,8 @@ desktop_environment="XFCE"
 #desktop_environment="Mate"
 #desktop_environment="Cinnamon"
 
-accept_values="no"
-accept_values="yes"
+accept_values="no"    # "yes"
+#accept_values="yes"
 
 
 
@@ -80,8 +78,8 @@ echo "===============  DEFINED VARIABLES ================"
 echo "==================================================="
 echo -e "\n"
 echo "USER : "${USRNAME}""
-echo "USER PW : "${USRPWD}""
-echo "ROOT PW : "${RTPWD}"..."
+echo "USER PW : "${USER_PW}""
+echo "ROOT PW : "${ROOT_PW}"..."
 echo "HOST NAME : "${HSTNAME}""
 echo "LOCATION  : "${LCLST}""
 echo "TIME ZONE : "${MYTMZ}""
@@ -92,6 +90,7 @@ echo "/boot : "${disk_boot}""
 echo "/swap : "${disk_swap}""
 echo "/root : "${disk_root}""
 echo "/home : "${disk_home}""
+
 key_yes_continue_or_leave
 
 
@@ -241,7 +240,6 @@ echo "127.0.0.1          localhost" >> /mnt/etc/hosts
 echo "::1          localhost" >> /mnt/etc/hosts
 echo "127.0.1.1          "${HSTNAME}".localdomain "${HSTNAME}"" >> /mnt/etc/hosts
 
-
 echo "==================================================="
 echo "======= Create root password and user   ==========="
 echo "==================================================="
@@ -295,6 +293,8 @@ echo "= Fonts"
 pacman -S --needed ttf-ubuntu-font-family ttf-dejavu ttf-bitstream-vera ttf-liberation noto-fonts ttf-roboto ttf-opensans opendesktop-fonts cantarell-fonts freetype2
 echo "= Printing"
 pacman -S --needed cups cups-pdf cups-filters cups-pk-helper foomatic-db foomatic-db-engine ghostscript gsfonts gutenprint python-pillow python-pip python-pyqt5 python-reportlab simple-scan system-config-printer
+echo "= others"
+pacman -S --needed neofetch
 
 
 echo "==================================================="
@@ -302,24 +302,24 @@ echo "==================== Desktop ======================"
 echo "==================================================="
 
 if [[ "${desktop_environment}" = "KDE" ]]; then
-      pacman -S --needed accountsservice aisleriot ark bluedevil breeze-icons bluez-qt cryfs discover dolphin encfs geany gocryptfs guvcview gwenview k3b kcalc kinit konsole kwrite meld neofetch networkmanager-qt okular packagekit-qt5 papirus-icon-theme pavucontrol-qt plasma print-manager qbittorrent sddm sddm-kcm sweeper
+      pacman -S --needed accountsservice aisleriot ark bluedevil breeze-icons bluez-qt cryfs discover dolphin encfs geany gocryptfs guvcview gwenview k3b kcalc kinit konsole kwrite meld  networkmanager-qt okular packagekit-qt5 papirus-icon-theme pavucontrol-qt plasma print-manager qbittorrent sddm sddm-kcm sweeper
 fi
 
 if [[ "${desktop_environment}" = "XFCE" ]]; then
-      pacman -S --needed accountsservice adapta-gtk-theme aisleriot arc-gtk-theme arc-icon-theme asunder blueman catfish dconf-editor epdfview galculator geany gnome-firmware gnome-packagekit gtk-engine-murrine guvcview meld neofetch papirus-icon-theme pavucontrol polkit-gnome sddm  transmission-gtk xarchiver xfburn xfce4 xfce4-goodies
+      pacman -S --needed accountsservice adapta-gtk-theme aisleriot arc-gtk-theme arc-icon-theme asunder blueman catfish dconf-editor epdfview galculator geany gnome-firmware gnome-packagekit gtk-engine-murrine guvcview meld  papirus-icon-theme pavucontrol polkit-gnome sddm  transmission-gtk xarchiver xfburn xfce4 xfce4-goodies
 fi
 
 if [[ "${desktop_environment}" = "LXQt" ]]; then
-      pacman -S --needed accountsservice aisleriot bluedevil bluez-qt breeze-icons discover epdfview galculator geany guvcview k3b kwrite lxqt lxqt-sudo meld neofetch networkmanager-qt obconf-qt openbox packagekit-qt5 papirus-icon-theme pavucontrol-qt pcmanfm-qt polkit-qt5 qbittorrent qterminal sddm sddm-kcm xarchiver xscreensaver
+      pacman -S --needed accountsservice aisleriot bluedevil bluez-qt breeze-icons discover epdfview galculator geany guvcview k3b kwrite lxqt lxqt-sudo meld  networkmanager-qt obconf-qt openbox packagekit-qt5 papirus-icon-theme pavucontrol-qt pcmanfm-qt polkit-qt5 qbittorrent qterminal sddm sddm-kcm xarchiver xscreensaver
 
 fi
 
 if [[ "${desktop_environment}" = "Mate" ]]; then
-      pacman -S --needed accountsservice adapta-gtk-theme aisleriot arc-gtk-theme arc-icon-theme asunder blueman brasero dconf-editor geany gnome-firmware gnome-packagekit gtk-engine-murrine guvcview mate mate-applet-dock mate-extra mate-polkit meld neofetch papirus-icon-theme sddm transmission-gtk
+      pacman -S --needed accountsservice adapta-gtk-theme aisleriot arc-gtk-theme arc-icon-theme asunder blueman brasero dconf-editor geany gnome-firmware gnome-packagekit gtk-engine-murrine guvcview mate mate-applet-dock mate-extra mate-polkit meld  papirus-icon-theme sddm transmission-gtk
 fi
 
 if [[ "${desktop_environment}" = "Cinnamon" ]]; then
-      pacman -S --needed accountsservice adwaita-icon-theme adapta-gtk-theme aisleriot arc-gtk-theme arc-icon-theme asunder blueman brasero cinnamon cinnamon-translations dconf-editor epdfview file-roller geany gnome-firmware gnome-packagekit gnome-terminal gtk-engine-murrine guvcview meld nemo nemo-fileroller nemo-share neofetch papirus-icon-theme pavucontrol polkit-gnome sddm tldr tmux transmission-gtk viewnior xed
+      pacman -S --needed accountsservice adwaita-icon-theme adapta-gtk-theme aisleriot arc-gtk-theme arc-icon-theme asunder blueman brasero cinnamon cinnamon-translations dconf-editor epdfview file-roller geany gnome-firmware gnome-packagekit gnome-terminal gtk-engine-murrine guvcview meld nemo nemo-fileroller nemo-share  papirus-icon-theme pavucontrol polkit-gnome sddm tldr tmux transmission-gtk viewnior xed
 
 fi
 
